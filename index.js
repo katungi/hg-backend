@@ -38,6 +38,9 @@ app.use(cors());
 // routes
 app.use("/api", authRoutes);
 
+app.get('/', (req,res)=>{
+  res.send("welcome to hostguest");
+})
 // port
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
