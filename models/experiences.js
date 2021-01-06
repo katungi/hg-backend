@@ -1,1 +1,67 @@
-const User = require
+const User = require("./user");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const experienceSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  shortInfo: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: "Category",
+  },
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  timeFrom: {
+    type: String,
+    required: true,
+  },
+  timeTo: {
+    type: String,
+    required: true,
+  },
+  status: String,
+  joinedPeopleCount: {
+    type: Number,
+    default: 0,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+  experienceCreator: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  joinedPeople: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  price: {
+    type: String,
+    required: true,
+  },
+});
+
+module.exports = mongoose.model("experience", experienceSchema);

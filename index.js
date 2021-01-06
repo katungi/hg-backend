@@ -8,6 +8,7 @@ require("dotenv").config();
 
 // routes
 const authRoutes = require("./routes/auth");
+const experienceRoutes = require("./routes/experiences");
 // express app
 const app = express();
 // mongoose
@@ -37,14 +38,13 @@ app.use(cors());
 
 // routes
 app.use("/api", authRoutes);
+app.use("/api", experienceRoutes);
 
-app.get('/', (req,res)=>{
+app.get("/", (req, res) => {
   res.send("welcome to hostguest");
-})
+});
 // port
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
   console.log(`Listening to port ${port}`);
 });
-
- 
