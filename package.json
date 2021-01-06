@@ -4,11 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Daniel Dennis",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/katungi/hog-backend/hg-backend.git"
+},"bugs": {
+  "url": "https://github.com/katungi/hg-backend/issues"
+},
+  "homepage": "https://github.com/katungi/hg-backend#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
@@ -22,5 +29,9 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.6",
     "shortid": "^2.2.16"
+  },
+  "engines": {
+    "node": "14.7.0",
+    "npm": "6.14.7"
   }
 }
