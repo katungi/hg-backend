@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Experiences = require("./experiences");
 const crypto = require("crypto");
+const Schema = mongoose.Schema;
 
 const userSchema = new mongoose.Schema(
   {

@@ -1,9 +1,23 @@
 const moment = require('moment');
 const mongoose = require('mongoose');
+const config = require(dotenv())
 
 const user1Id = mongoose.Types.ObjectId();
+const user2Id = mongoose.Types.ObjectId();
+const user3Id = mongoose.Types.ObjectId();
+const user4Id = mongoose.Types.ObjectId();
 const experience1Id = mongoose.Types.ObjectId();
+const experience2Id = mongoose.Types.ObjectId();
+const experience3Id = mongoose.Types.ObjectId();
+const experience4Id = mongoose.Types.ObjectId();
+const experience5Id = mongoose.Types.ObjectId();
+const experience6Id = mongoose.Types.ObjectId();
 const category1Id = mongoose.Types.ObjectId();
+const category2Id = mongoose.Types.ObjectId();
+const category3Id = mongoose.Types.ObjectId();
+const category4Id = mongoose.Types.ObjectId();
+const category5Id = mongoose.Types.ObjectId();
+const category6Id = mongoose.Types.ObjectId();
 
 module.exports = {
     "experiences": [
