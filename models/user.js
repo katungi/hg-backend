@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
+const Experiences = require("./experiences");
 const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema(
   {
+    avatar: String,
     username: {
       type: String,
       trim: true,
@@ -37,18 +39,18 @@ const userSchema = new mongoose.Schema(
     about: {
       type: String,
     },
+    active: {
+      type: Boolean,
+    },
     role: {
       type: Number,
       trim: true,
-    },
-    photo: {
-      data: Buffer,
-      contentType: String,
     },
     resetPasswordLink: {
       data: String,
       default: "",
     },
+    joinedExperiences: [{ type: Schema.Types.ObjectId, ref: "Experiences" }],
   },
   { timestamp: true }
 );
@@ -84,7 +86,7 @@ userSchema.methods = {
   },
 
   makeSalt: function () {
-    return Math.round(new Date().valueOf() * Math.random()) + '';
+    return Math.round(new Date().valueOf() * Math.random()) + "";
   },
 };
 // the user object is the first argument and the timestamp is the second argument

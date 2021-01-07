@@ -12,9 +12,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/katungi/hog-backend/hg-backend.git"
-},"bugs": {
-  "url": "https://github.com/katungi/hg-backend/issues"
-},
+  },
+  "bugs": {
+    "url": "https://github.com/katungi/hg-backend/issues"
+  },
   "homepage": "https://github.com/katungi/hg-backend#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -25,6 +26,7 @@
     "express-jwt": "^6.0.0",
     "express-validator": "^6.9.2",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mongoose": "^5.11.10",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.6",
