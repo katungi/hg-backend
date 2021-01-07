@@ -72,5 +72,12 @@ exports.signout = (req, res) => {
 // hide stuff from non-logged in users.
 exports.requireSignin = expressJwt({
   secret: process.env.JWT_SECRET, // req.user
-  algorithms: ['HS256'], // specify the algorithm. Wont work otherwise
+  algorithms: ["HS256"], // specify the algorithm. Wont work otherwise
 });
+
+exports.onlyAuthUser = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  return res.status(401).send({ errors: { auth: "Not Authenticated!" } });
+};

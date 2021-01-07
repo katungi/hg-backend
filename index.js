@@ -38,7 +38,7 @@ app.use(cors());
 
 // routes
 app.use("/api", authRoutes);
-app.use("/api", experienceRoutes);
+app.use("/api/experiences", experienceRoutes);
 
 app.get("/", (req, res) => {
   res.send("welcome to hostguest");
