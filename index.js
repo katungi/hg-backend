@@ -35,7 +35,7 @@ app.use(cookieParser());
 if (process.env.NODE_ENV == "development") {
   app.use(cors({ origin: `${process.env.CLIENT_URL}` }));
 }
-app.use(cors());
+app.use(cors());  
 
 // routes
 app.use("/api", authRoutes);
@@ -43,7 +43,7 @@ app.use("/api/experiences", experienceRoutes);
 app.use('/api/categories', categoriesRoutes);
 
 app.get("/", (req, res) => {
-  res.send("welcome to hostguest");
+  res.send("If you can see this, you shouldn't be");
 });
 // port
 const port = process.env.PORT || 8000;
