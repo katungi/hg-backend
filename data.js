@@ -23,6 +23,8 @@ module.exports = {
     "experiences": [
 {
     "_id": experience1Id,
+    "location": "Bratislava, SK",
+    "processedLocation": "bratislavask",
       "title": "Night in the City",
       "image": "https://images.unsplash.com/photo-1519999482648-25049ddd37b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2452&q=80",
       "description": "Slovakia's capital since the country's independence in 1993, Bratislava is a mosaic of illustrious history: a medieval and Gothic old town, baroque palaces commissioned by Hungarian nobles, and the crowning castle, rebuilt to Renaissance finery. Slicing through the city are stark-angled, communist-era blocks and a futurist bridge. Recent years have added a cast of outlandish statues, boutiques and modish cafes, eagerly sought out by visiting stag party groups and day trippers from Vienna. Many arrive purely to enjoy the uproarious nightlife, from rowdy beer halls to hidden nightclubs.",
@@ -41,6 +43,8 @@ module.exports = {
 },
 {
     "_id": experience2Id,
+    "location": "New York, US",
+    "processedLocation": "newyorkus",
     "title": "Batman Screening",
     "image": "https://images.unsplash.com/photo-1526906004573-b4a4fcd642fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
     "description": "One of the most iconic fictional characters in the world, Batman has dedicated his life to an endless crusade, a war on all criminals in the name of his murdered parents, who were taken from him when he was just a child. Since that tragic night, he has trained his body and mind to near physical perfection to be a self-made Super Hero. He's developed an arsenal of technology that would put most armies to shame. And he's assembled teams of his fellow DC Super Heroes, like the Justice League, the Outsiders and Batman, Incorporated.",
@@ -55,10 +59,12 @@ module.exports = {
     "category": category2Id,
     "joinedPeople": [user3Id],
     "experienceCreator": user2Id,
-    "price":"Ksh 200/Person"
+    "price":"Ksh 1000/Person"
   },
   {
     "_id": experience3Id,
+    "location": "Lisbon, PT",
+    "processedLocation": "lisbonpt",
     "title": "Cycling in Almada",
     "image": "https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2389&q=80",
     "description": "Human presence in the area of Almada dates to the end of the Neolithic period about 5000 years ago; archeological excavations performed in the municipality suggest that non-sedentary nomadic tribes may have occupied this location sporadically. The gradual development of settlement here made its greatest advance with the coming of Islamic civilization, when Muslims constructed a fort at Almada to defend and monitor the entrance to the Tagus River.",
@@ -73,10 +79,12 @@ module.exports = {
     "category": category1Id,
     "joinedPeople": [user1Id, user3Id],
     "experienceCreator": user2Id,
-    "price":"Ksh 200/Person"
+    "price":"Ksh 400/Person"
   },
   {
     "_id": experience4Id,
+    "location": "Los Angeles, US",
+    "processedLocation": "losangelesus",
     "title": "New Aquaman",
     "image": "https://images.unsplash.com/photo-1512136146408-dab5f2ba8ebb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80",
     "description": "An action-packed adventure that spans the vast, visually breathtaking underwater world of the seven seas, “Aquaman” reveals the origin story of half-human, half-Atlantean Arthur Curry and takes him on the journey of his lifetime—one that will not only force him to face who he really is, but to discover if he is worthy of who he was born to be…a king.",
@@ -91,10 +99,12 @@ module.exports = {
     "category": category1Id,
     "joinedPeople": [user1Id, user3Id],
     "experienceCreator": user2Id,
-    "price":"Ksh 200/Person"
+    "price":"Ksh 2,000/Person"
   },
   {
     "_id": experience5Id,
+    "location": "Berlin, GE",
+    "processedLocation": "berlinge",
     "title": "Burger Festival",
     "image": "https://images.unsplash.com/photo-1536510233921-8e5043fce771?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1671&q=80",
     "description": "BurgerFest is located along Main and Buffalo Streets and in the Village of Hamburg Municipal Parking Lot. The Taste of Hamburg portion of the festival features the favorite offerings of area restaurants, in the parking lot.  The one-day festival has something for everyone, from Kids Space children’s inflatable rides and activities; an arts and crafts show and sale, the Classic Car Show and the Beer Tent.",
@@ -109,10 +119,12 @@ module.exports = {
     "category": category6Id,
     "joinedPeople": [user1Id, user3Id],
     "experienceCreator": user2Id,
-    "price":"Ksh 200/Person"
+    "price":"Ksh 6,000/Person"
   },
   {
     "_id": experience6Id,
+    "location": "London, UK",
+    "processedLocation": "londonuk",
     "title": "London Marathon",
     "image": "https://images.unsplash.com/photo-1513276193780-64b881470da8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
     "description": "In a nod to Greek history, the first marathon commemorated the run of the soldier Pheidippides from a battlefield near the town of Marathon, Greece, to Athens in 490 B.C. According to legend, Pheidippides ran the approximately 25 miles to announce the defeat of the Persians to some anxious Athenians.",
@@ -127,7 +139,7 @@ module.exports = {
     "category": category1Id,
     "joinedPeople": [user1Id, user3Id],
     "experienceCreator": user2Id,
-    "price":"Ksh 200/Person"
+    "price":"Ksh 500/Person"
   }
     ],
     "users": [
@@ -159,14 +171,14 @@ module.exports = {
             "createdAt": moment().toISOString(),
             "updatedAt": moment().toISOString(),
             "username": "Petergreen",
-      "password": "testtest1",
+            "password": "testtest1",
       joinedExperiences: [experience1Id]
         },
         {
             "_id": user3Id,
-      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuqyc3j2s3bL4DIkC8uC9h0rcAdsDXcwJPNh8XHWbLQfHbOpVU",
-      "name": "Kevin Rock",
-      "email": "kevin@gmail.com",
+            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuqyc3j2s3bL4DIkC8uC9h0rcAdsDXcwJPNh8XHWbLQfHbOpVU",
+            "name": "Kevin Rock",
+            "email": "kevin@gmail.com",
             "profile": "http://localhost:3000/profile/asfjkasfhd",
             "about": "I have a famous name",
             "active":true,
@@ -174,8 +186,8 @@ module.exports = {
             "createdAt": moment().toISOString(),
             "updatedAt": moment().toISOString(),
             "username": "Kevin21",
-      "password": "testtest2",
-      joinedExperiences: [experience2Id, experience3Id, experience4Id, experience5Id, experience6Id]
+            "password": "testtest2",
+            joinedExperiences: [experience2Id, experience3Id, experience4Id, experience5Id, experience6Id]
         },
         {
             "_id": user4Id,

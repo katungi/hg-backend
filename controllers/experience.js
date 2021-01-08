@@ -1,22 +1,43 @@
-const experiences = require("../models/experiences");
 const Experience = require("../models/experiences");
 const User = require("../models/user");
 
 exports.getExperiences = function (req, res) {
-  const { category } = req.query;
+  const { category, location } = req.query;
   // page setup for frontend
 
   const pageSize = parseInt(req.query.pageSize);
   const pageNum = parseInt(req.query.pageNum);
- //  const skips = pageSize * (pageNum - 1);
+  const skips = pageSize * (pageNum - 1);
 
-  Experience.count({}).then((count) => {
-    return res.json({
-      experiences: experiences.splice(0, pageSize),
-      count,
-      pageCount: count / pageSize,
+  const findQuery = location
+    ? Experience.find({ processedLocation: { $regex: ".*" + location + ".*" } })
+    : Experience.find({});
+
+  findQuery
+    .populate("category")
+    .populate("joinedPeople")
+    .skip(skips)
+    .limit(pageSize)
+    .sort({ 'createdAt': -1})
+    .exec((errors, experiences) => {
+      if (errors) {
+        return res.status(422).send({ errors });
+      }
+
+      if (category) {
+        experiences = experiences.filter((experience) => {
+          return experience.category.name === category;
+        });
+      }
+
+      Experience.count({}).then(count => {
+        return res.json({
+          experiences: experiences,
+          count,
+          pageCount: count / pageSize,
+        });
+      });
     });
-  });
 };
 exports.createExperience = function (req, res) {
   const experienceData = req.body;
