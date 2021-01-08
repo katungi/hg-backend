@@ -39,6 +39,24 @@ exports.getExperiences = function (req, res) {
       });
     });
 };
+
+exports.getExperienceById = function (req, res) {
+  const { id } = req.params;
+  Experience.findById(id)
+    .populate("experienceCreator", "name id avatar")
+    .populate("category")
+    .populate({
+      path: "joinedPeople",
+      options: { limit: 5, sort: { username: -1 } },
+    })
+    .exec((errors, experience) => {
+      if (errors) {
+        return res.status(422).send({ errors });
+      }
+
+      return res.json(experience);
+    });
+};
 exports.createExperience = function (req, res) {
   const experienceData = req.body;
   const user = req.user;
@@ -100,15 +118,15 @@ exports.updateExperience = function (req, res) {
   experienceData.updatedAt = new Date();
 
   if (user.id === experienceData.experienceCreator._id) {
-    Experience.findByIdAndUpdate(id, { $set: meetupData }, { new: true })
+    Experience.findByIdAndUpdate(id, { $set: experienceData }, { new: true })
       .populate("ExperienceCreator", "name id avatar")
       .populate("category")
-      .exec((errors, updatedMeetup) => {
+      .exec((errors, updatedExperience) => {
         if (errors) {
           return res.status(422).send({ errors });
         }
 
-        return res.json(updatedMeetup);
+        return res.json(updatedExperience);
       });
   } else {
     return res.status(401).send({ errors: { message: "Not Authorized!" } });
@@ -119,7 +137,7 @@ exports.deleteExperience = function (req, res) {
   const { id } = req.params;
   const user = req.user;
 
-  Experience.findById(id, (errors, meetup) => {
+  Experience.findById(id, (errors, experience) => {
     if (errors) {
       return res.status(422).send({ errors });
     }
@@ -133,7 +151,7 @@ exports.deleteExperience = function (req, res) {
         return res.status(422).send({ errors });
       }
 
-      return res.json(meetup._id);
+      return res.json(experience._id);
     });
   });
 };
