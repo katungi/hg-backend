@@ -5,18 +5,18 @@ const ExperiencesCtrl = require("../controllers/experience");
 const AuthCtrl = require("../controllers/auth");
 
 router.get("/", ExperiencesCtrl.getExperiences);
-router.get("/secret", AuthCtrl.onlyAuthUser);
+router.get("/secret", AuthCtrl.requireSignin);
 router.get("/:id", ExperiencesCtrl.getExperienceById);
 
 router.post("", ExperiencesCtrl.createExperience);
-router.post("/:id/join", AuthCtrl.onlyAuthUser, ExperiencesCtrl.joinExperience);
+router.post("/:id/join", AuthCtrl.requireSignin, ExperiencesCtrl.joinExperience);
 router.post(
   "/:id/leave",
-  AuthCtrl.onlyAuthUser,
+  AuthCtrl.requireSignin,
   ExperiencesCtrl.leaveExperience
 );
 
-router.patch("/:id", AuthCtrl.onlyAuthUser, ExperiencesCtrl.updateExperience);
-route.delete("/:id", AuthCtrl.onlyAuthUser, ExperiencesCtrl.deleteExperience);
+router.patch("/:id", AuthCtrl.requireSignin, ExperiencesCtrl.updateExperience);
+router.delete("/:id", AuthCtrl.requireSignin, ExperiencesCtrl.deleteExperience);
 
 module.exports = router;

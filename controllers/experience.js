@@ -111,10 +111,9 @@ exports.leaveExperience = function (req, res) {
 };
 
 exports.updateExperience = function (req, res) {
-  const experieceData = req.body;
+  const experienceData = req.body;
   const { id } = req.params;
-  const user = req,
-    user;
+  const user = req.user;
   experienceData.updatedAt = new Date();
 
   if (user.id === experienceData.experienceCreator._id) {
