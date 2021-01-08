@@ -77,4 +77,63 @@ exports.joinExperience = function (req, res) {
   });
 };
 
-e
+exports.leaveExperience = function (req, res) {
+  const user = req.user;
+  const { id } = req.params;
+
+  Promise.all([
+    Experience.updateOne(
+      { _id: id },
+      { $pull: { joinedPeople: user.id }, $inc: { joinedPeopleCount: -1 } }
+    ),
+    User.updateOne({ _id: user.id }, { $pull: { joinedExperiences: id } }),
+  ])
+    .then((result) => res.json({ id }))
+    .catch((errors) => res.status(422).send({ errors }));
+};
+
+exports.updateExperience = function (req, res) {
+  const experieceData = req.body;
+  const { id } = req.params;
+  const user = req,
+    user;
+  experienceData.updatedAt = new Date();
+
+  if (user.id === experienceData.experienceCreator._id) {
+    Experience.findByIdAndUpdate(id, { $set: meetupData }, { new: true })
+      .populate("ExperienceCreator", "name id avatar")
+      .populate("category")
+      .exec((errors, updatedMeetup) => {
+        if (errors) {
+          return res.status(422).send({ errors });
+        }
+
+        return res.json(updatedMeetup);
+      });
+  } else {
+    return res.status(401).send({ errors: { message: "Not Authorized!" } });
+  }
+};
+
+exports.deleteExperience = function (req, res) {
+  const { id } = req.params;
+  const user = req.user;
+
+  Experience.findById(id, (errors, meetup) => {
+    if (errors) {
+      return res.status(422).send({ errors });
+    }
+
+    if (experience.experienceCreator != user.id) {
+      return res.status(401).send({ errors: { message: "Not Authorized!" } });
+    }
+
+    experience.remove((errors, _) => {
+      if (errors) {
+        return res.status(422).send({ errors });
+      }
+
+      return res.json(meetup._id);
+    });
+  });
+};
