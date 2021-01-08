@@ -18,7 +18,7 @@ exports.getExperiences = function (req, res) {
     .populate("joinedPeople")
     .skip(skips)
     .limit(pageSize)
-    .sort({ 'createdAt': -1})
+    .sort({ createdAt: -1 })
     .exec((errors, experiences) => {
       if (errors) {
         return res.status(422).send({ errors });
@@ -30,7 +30,7 @@ exports.getExperiences = function (req, res) {
         });
       }
 
-      Experience.count({}).then(count => {
+      Experience.count({}).then((count) => {
         return res.json({
           experiences: experiences,
           count,
@@ -52,3 +52,29 @@ exports.createExperience = function (req, res) {
     return res.json(createdExperience);
   });
 };
+
+exports.joinExperience = function (req, res) {
+  const user = req.user;
+  const { id } = req.params;
+
+  Experience.findById(id, (errors, experience) => {
+    if (errors) {
+      return res.status(422).send({ errors });
+    }
+
+    experience.joinedPeople.push(user);
+    experience.joinedPeopleCount++;
+
+    return Promise.all([
+      experience.save(),
+      User.updateOne(
+        { _id: user.id },
+        { $push: { joinedExperiences: experience } }
+      ),
+    ])
+      .then((result) => res.json({ id }))
+      .catch((errors) => res.status(422).send({ errors }));
+  });
+};
+
+e
