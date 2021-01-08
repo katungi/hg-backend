@@ -1,6 +1,6 @@
 const moment = require('moment');
 const mongoose = require('mongoose');
-const config = require(dotenv())
+require('dotenv').config()
 
 const user1Id = mongoose.Types.ObjectId();
 const user2Id = mongoose.Types.ObjectId();
@@ -74,7 +74,8 @@ module.exports = {
     "joinedPeople": [user1Id, user3Id],
     "experienceCreator": user2Id,
     "price":"Ksh 200/Person"
-  },{
+  },
+  {
     "_id": experience4Id,
     "title": "New Aquaman",
     "image": "https://images.unsplash.com/photo-1512136146408-dab5f2ba8ebb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80",

@@ -9,6 +9,7 @@ require("dotenv").config();
 // routes
 const authRoutes = require("./routes/auth");
 const experienceRoutes = require("./routes/experiences");
+const categoriesRoutes = require('./routes/categories');
 // express app
 const app = express();
 // mongoose
@@ -39,6 +40,7 @@ app.use(cors());
 // routes
 app.use("/api", authRoutes);
 app.use("/api/experiences", experienceRoutes);
+app.use('/api/categories', categoriesRoutes);
 
 app.get("/", (req, res) => {
   res.send("welcome to hostguest");

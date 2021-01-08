@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const Experience = require("./models/experiences");
 const User = require("./models/user");
 const Category = require("./models/category");
-
 const data = require("./data");
 const experiences = require("./models/experiences");
+require('dotenv').config()
 
 class DB {
   constructor() {
@@ -30,8 +30,8 @@ class DB {
       await new User(user).save(() => {});
     });
 
-    await this.experiences.forEach(async (meetup) => {
-      await new Experience(experiences).save(() => {});
+    await this.experiences.forEach(async (experience) => {
+      await new Experience(experience).save(() => {});
     });
 
     console.log("Database Populated!");
@@ -44,7 +44,7 @@ class DB {
 }
 
 mongoose
-  .connect(config.DATABASE_LOCAL, { useNewUrlParser: true })
+  .connect(process.env.DATABASE_LOCAL, { useNewUrlParser: true })
   .then(async () => {
     const db = new DB();
     await db.seedDb();
