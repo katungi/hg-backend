@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { signup, signin, signout, requireSignin } = require("../controllers/auth.js");
+const { signup, signin, signout, requireSignin , googleLogin} = require("../controllers/auth.js");
 
 // validators
 const { runValidation } = require("../validators/index");
@@ -12,6 +12,9 @@ const {
 router.post("/signup", userSignupValidator, runValidation, signup);
 router.post("/signin", userSigninValidator, runValidation, signin);
 router.get('/signout', signout)
+
+// google login
+router.post('/google-login', googleLogin);
 
 // this is for testing btw
 

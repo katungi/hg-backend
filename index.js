@@ -14,7 +14,7 @@ const categoriesRoutes = require('./routes/categories');
 const app = express();
 // mongoose
 mongoose
-  .connect(process.env.DATABASE_CLOUD, {
+  .connect(process.env.DATABASE_LOCAL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
