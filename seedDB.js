@@ -44,7 +44,7 @@ class DB {
 }
 
 mongoose
-  .connect(process.env.DATABASE_LOCAL, { useNewUrlParser: true })
+  .connect(process.env.DATABASE_CLOUD, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
     const db = new DB();
     await db.seedDb();
