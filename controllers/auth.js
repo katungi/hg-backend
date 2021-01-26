@@ -162,8 +162,8 @@ exports.passportLogin = function (req, res, next) {
   passport.use(
     new GoogleStrategy(
       {
-        clientID: keys.google.clientID,
-        clientSecret: keys.google.clientSecret,
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: "https://hostguest-backend.herokuapp.com/api/auth/google/redirect"
       },
       (accessToken, refreshToken, profile, done) => {
