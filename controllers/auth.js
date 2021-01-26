@@ -141,19 +141,6 @@ exports.googleLogin = (req, res) => {
     });
 };
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/redirect",
-    },
-    (accessToken) => {
-      console.log("access token: ", accessToken);
-    }
-  )
-);
-
 exports.passportPreLogin = function (req, res, next) {
   passport.authenticate("google", ["profile", "email"]);
 };

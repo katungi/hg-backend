@@ -23,7 +23,7 @@ router.post("/signin", userSigninValidator, runValidation, signin);
 router.get("/signout", signout);
 
 // google login
-router.post("/google-login", googleLogin);
+router.post("/google-login", goog);
 
 router.get("/auth/google/redirect", passportPreLogin,passportLogin);
 
