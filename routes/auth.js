@@ -7,7 +7,7 @@ const {
   requireSignin,
   googleLogin,
   passportLogin,
-  passportPreLogin
+  passportPreLogin,
 } = require("../controllers/auth.js");
 const passport = require("passport");
 
@@ -25,7 +25,7 @@ router.get("/signout", signout);
 // google login
 router.post("/google-login", googleLogin);
 
-router.get("/auth/google/redirect", passportPreLogin );
+router.get("/auth/google/redirect", passportPreLogin,passportLogin);
 
 // this is for testing btw -- remove it from production
 
