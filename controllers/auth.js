@@ -2,11 +2,10 @@ const User = require("../models/user");
 const shortId = require("shortid");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
-const { OAuth2Client } = require("google-auth-library");
+// const { OAuth2Client } = require("google-auth-library");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
-passport.use(new GoogleStrategy());
 
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((err, user) => {
