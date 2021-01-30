@@ -9,7 +9,7 @@ require("dotenv").config();
 // routes
 const authRoutes = require("./routes/auth");
 const experienceRoutes = require("./routes/experiences");
-const categoriesRoutes = require('./routes/categories');
+const categoriesRoutes = require("./routes/categories");
 // express app
 const app = express();
 // mongoose
@@ -26,6 +26,14 @@ mongoose
     console.log(err);
   });
 
+app.all("*", function (req, res, next) {
+  var origin = req.get("origin");
+  res.header("Access-Control-Allow-Origin", origin);
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
+
 // middleware
 app.use(morgan("dev"));
 app.use(bodyParser.json());
@@ -35,13 +43,13 @@ app.use(cookieParser());
 if (process.env.NODE_ENV == "development") {
   app.use(cors({ origin: `${process.env.CLIENT_URL}` }));
 }
-// app.use(cors());
+app.use(cors());
 app.options("*", cors());
 
 // routes
 app.use("/api", authRoutes);
 app.use("/api/experiences", experienceRoutes);
-app.use('/api/categories', categoriesRoutes);
+app.use("/api/categories", categoriesRoutes);
 
 app.get("/", (req, res) => {
   res.send("If you can see this, you shouldn't be");
