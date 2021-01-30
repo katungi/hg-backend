@@ -2,10 +2,9 @@ const User = require("../models/user");
 const shortId = require("shortid");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
-// const { OAuth2Client } = require("google-auth-library");
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-
+const { OAuth2Client } = require("google-auth-library");
+// const passport = require("passport");
+// const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((err, user) => {
@@ -86,129 +85,68 @@ exports.onlyAuthUser = function (req, res, next) {
   return res.status(401).send({ errors: { auth: "Not Authenticated!" } });
 };
 
-// const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-// exports.googleLogin = (req, res) => {
-//   const idToken = req.body.tokenId;
-//   client
-//     .verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT_ID })
-//     .then((response) => {
-//       // console.log(response)
-//       const { email_verified, name, email, jti } = response.payload;
-//       if (email_verified) {
-//         User.findOne({ email }).exec((err, user) => {
-//           if (user) {
-//             // console.log(user)
-//             const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-//               expiresIn: "1d",
-//             });
-//             res.cookie("token", token, { expiresIn: "1d" });
-//             const { _id, email, name, role, username } = user;
-//             return res.json({
-//               token,
-//               user: { _id, email, name, role, username },
-//             });
-//           } else {
-//             let username = shortid.generate();
-//             let profile = `${process.env.CLIENT_URL}/profile/${username}`;
-//             let password = jti;
-//             user = new User({ name, email, profile, username, password });
-//             user.save((err, data) => {
-//               if (err) {
-//                 return res.status(400).json({
-//                   error: errorHandler(err),
-//                 });
-//               }
-//               const token = jwt.sign(
-//                 { _id: data._id },
-//                 process.env.JWT_SECRET,
-//                 { expiresIn: "1d" }
-//               );
-//               res.cookie("token", token, { expiresIn: "1d" });
-//               const { _id, email, name, role, username } = data;
-//               return res.json({
-//                 token,
-//                 user: { _id, email, name, role, username },
-//               });
-//             });
-//           }
-//         });
-//       } else {
-//         return res.status(400).json({
-//           error: "Google login failed. Try again.",
-//         });
-//       }
-//     });
-// };
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+exports.googleLogin = (req, res) => {
+  const idToken = req.body.token;
+  const ticket = await client.verifyIdToken({
+    idToken,
+    audience: process.env.GOOGLE_CLIENT_ID
+  });
 
-exports.passportPreLogin = function (req, res, next) {
-  passport.authenticate("google", ["profile", "email"]);
-};
+  const {name, email, email_verified, jti} = ticket.getPayload();
 
-exports.passportLogin = function (req, res, next) {
-  passport.use(
-    new GoogleStrategy(
-      {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "https://hostguest-backend.herokuapp.com/api/auth/google/redirect"
-      },
-      (accessToken, refreshToken, profile, done) => {
-        // passport callback function
-        //check if user already exists in our db with the given profile ID
-        User.findOne({ googleId: profile.id }).then((currentUser) => {
-          if (currentUser) {
-            const token = jwt.sign(
-              { _id: currentUser._id },
-              process.env.JWT_SECRET,
-              {
-                expiresIn: "1d",
-              }
-            );
-            res.cookie("token", token, { expiresIn: "1d" });
-            const { _id, email, name, role, username } = user;
-            return res.json({
-              token,
-              currentUser: { _id, email, name, role, username },
-            });
-          } else if (!currentUser) {
-            let username = shortid.generate();
-            let profile = `${process.env.CLIENT_URL}/profile/${username}`;
-            let password = jti;
-            //if not, create a new user
-            new User({
-              googleId: profile.id,
-              name,
-              email,
-              profile,
-              username,
-              password,
-            })
-              .save()
-              .then((err, newUser) => {
-                if (error) {
-                  return res.status(400).json({
-                    error: error,
-                  });
-                }
-                const token = jwt.sign(
-                  { _id: data._id },
-                  process.env.JWT_SECRET,
-                  { expiresIn: "1d" }
-                );
-                res.cookie("token", token, { expiresIn: "1d" });
-                const { _id, email, name, role, username } = data;
-                return res.json({
-                  token,
-                  user: { _id, email, name, role, username },
-                });
-              });
-          } else {
-            return res.status(400).json({
-              error: "Google Login failed. Try again",
-            });
-          }
+  if(email_verified) {
+    User.findOne({
+      email
+    }).exec((err, user)=>{
+      if(user) {
+        const token  = jwt.sign({
+          _id: user._id}, process.env.JWT_SECRET,{
+            expiresIn: "1d"
         });
+        res.cookie("token", token, {
+          expiresIn: "1d"
+        });
+        const {_id, email, name, role, username} = user;
+        return res.json({
+          token,
+          user:{ _id, email, name, role, username}
+        });
+      } else {
+        //create the credentials on the go:
+
+        let username = shortId.generate();
+        let profile = `${process.env.CLIENT_URL}/profile/${username}`;
+        let password = jti;
+        user = new User({
+          name, email, profile,username, password
+        });
+       user.save((err,data)=>{
+         if(err) {
+           return res.status(400).json({
+             error: error
+           });
+         }
+         const token = jwt.sign(
+           {_id: data._id},
+           process.env.JWT_SECRET,
+           {expiresIn: "1d"}
+         );
+         res.cookie("token", token, {
+           expiresIn: "1d"
+         });
+         const {_id, email, name, role, username} = data;
+         return res.json({
+           token,
+           user: {_id, email, name, role, username}
+         });
+       });
       }
-    )
-  );
+    })
+  } else {
+    return res.status(400).json({
+      error: "Google Login failed"
+    })
+  }
 };
+

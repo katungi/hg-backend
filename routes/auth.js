@@ -6,10 +6,7 @@ const {
   signout,
   requireSignin,
   googleLogin,
-  passportLogin,
-  passportPreLogin,
 } = require("../controllers/auth.js");
-const passport = require("passport");
 
 // validators
 const { runValidation } = require("../validators/index");
@@ -23,15 +20,12 @@ router.post("/signin", userSigninValidator, runValidation, signin);
 router.get("/signout", signout);
 
 // google login
-// router.post("/google-login", googleLogin);
-
-router.post("/auth/google/redirect", passportPreLogin, passportLogin);
-
-// this is for testing btw -- remove it from production
+router.post("/google-login", googleLogin);
 
 router.get("/secret", requireSignin, (req, res) => {
   res.json({
     message: "you have access to the secret page dummy!",
   });
 });
+
 module.exports = router;
