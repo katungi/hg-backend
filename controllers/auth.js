@@ -88,7 +88,7 @@ exports.onlyAuthUser = function (req, res, next) {
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 exports.googleLogin = (req, res) => {
   const idToken = req.body.token;
-  const ticket = await client.verifyIdToken({
+  const ticket = client.verifyIdToken({
     idToken,
     audience: process.env.GOOGLE_CLIENT_ID
   });
