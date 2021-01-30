@@ -7,6 +7,7 @@ const {
   requireSignin,
   googleLogin,
 } = require("../controllers/auth.js");
+const cors = require('cors')
 
 // validators
 const { runValidation } = require("../validators/index");
@@ -20,7 +21,7 @@ router.post("/signin", userSigninValidator, runValidation, signin);
 router.get("/signout", signout);
 
 // google login
-router.post("/google-login", googleLogin);
+router.post("/google-login", cors(), googleLogin);
 
 router.get("/secret", requireSignin, (req, res) => {
   res.json({
